@@ -1,0 +1,94 @@
+<?php
+
+
+
+//custom leaflet extension
+
+
+
+function utm_map($map_id, $lang = 'nl', $nid = false, $series = false, $lat, $lon, $dep = 12, $geo_user = true){
+	$r = '';
+	$token = 'pk.eyJ1IjoidXRtLXNpdGUiLCJhIjoiY2tvYmRsaGhiMnowZjJxbHk0YnB0Y2J5YiJ9.oz_yKyXdP_5Rmcm_48z6HA';
+
+
+
+//setup
+
+
+
+	$map_init = array(
+		'api' => 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token='.$token,
+		'nid' => $nid,
+		'lat' => $lat,
+		'lon' => $lon,
+		'dep' => $dep,
+	);
+	drupal_add_js(array('utm_map_init' => array($map_id => json_encode($map_init))), 'setting');
+
+
+
+//location view
+
+
+
+	$map_data = array();
+	$map_view = views_embed_view('map', 'module_'.$lang, ($series ? implode('+', $series) : 'all'));
+	$map_view = explode('%%', trim(strip_tags($map_view)));
+	foreach($map_view as $e){
+		$e = trim($e);
+		if(!empty($e)){
+			$v = explode('##', $e);
+			if(count($v) == 5){
+				$map_data[] = array(
+					'nid' => $v[0],
+					'lat' => $v[1],
+					'lon' => $v[2],
+					'box' => '<a href="'.base_path().drupal_get_path_alias('node/'.$v[0]).'"><span class="name">'.$v[3].'</span><span class="name-sub">'.$v[4].'</span></a>',
+				);
+			}
+		}
+	}
+	drupal_add_js(array('utm_map_data' => array($map_id => json_encode($map_data))), 'setting');
+
+
+
+//language str
+
+
+
+	$lang_str = array(
+		'geo_user' => array('nl' => 'Mijn locatie', 'en' => 'My location'),
+		'geo_err1' => array('nl' => 'Geolocatie wordt niet ondersteund door jouw browser', 'en' => 'Geolocation is not supported by this browser'),
+		'geo_err2' => array('nl' => 'Je hebt geen toestemming gegeven voor geolocatie', 'en' => 'You have denied the use of geolocation'),
+		'geo_err3' => array('nl' => 'Informatie voor geolocatie is niet beschikbaar', 'en' => 'Geolocation information is unavailable'),
+		'geo_err4' => array('nl' => 'Geolocatie ophalen duurde te lang', 'en' => 'Geolocation request timed out'),
+		'geo_err5' => array('nl' => 'Onbekende fout: probeer opnieuw', 'en' => 'An unknown error occurred'),
+	);
+
+
+
+//build map and return
+
+
+
+	drupal_add_js(drupal_get_path('module', 'utm_map') . '/js/map.js');
+	$r .= '<div class="map-container">';
+	$r .= '<div>';
+	$r .= '<div id="'.$map_id.'" class="map"></div>';
+	if($geo_user){
+		$r .= '<div class="geo-user">';
+		$r .= '<a class="geo-user-btn" data-map="'.$map_id.'">'.$lang_str['geo_user'][$lang].'</a>';
+		$r .= '</div>';
+	}
+	$r .= '</div>';
+	$r .= '</div>';
+	$r .= '<div class="geo-fail" data-map="'.$map_id.'">';
+	$r .= '<div data-id="1">'.$lang_str['geo_err1'][$lang].'</div>';
+	$r .= '<div data-id="2">'.$lang_str['geo_err2'][$lang].'</div>';
+	$r .= '<div data-id="3">'.$lang_str['geo_err3'][$lang].'</div>';
+	$r .= '<div data-id="4">'.$lang_str['geo_err4'][$lang].'</div>';
+	$r .= '<div data-id="5">'.$lang_str['geo_err5'][$lang].'</div>';
+	$r .= '</div>';
+	return $r;
+}
+?>

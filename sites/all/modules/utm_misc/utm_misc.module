@@ -1,0 +1,51 @@
+<?php
+
+
+
+//caption
+
+
+
+function caption($str, $src, $uri, $license, $r = ''){
+	if($str){
+		$r .= '<div>'.$str.'</div>';
+	}
+	if($src || $uri){
+		$r .= '<div>';
+		if($uri){
+			$uri_path = parse_url($uri);
+			$r .= '<a href="'.$uri.'" target="_blank">'.($src ? $src : $uri_path['host']).'</a>';
+		} else{
+			$r .= '<em>'.$src.'</em>';
+		}
+		$r .= '</div>';
+	}
+	if(!empty($license)){
+		$r .= $license;
+	}
+	if(!empty($r)){
+		$r = '<div class="caption"><div>'.$r.'</div></div>';
+	}
+	return $r;
+}
+
+
+
+//hooks
+
+
+
+function utm_misc_menu(){
+	$items['pop/%/%'] = array(
+		'type' => MENU_CALLBACK,
+		'title' => 'Pop',
+		'page callback' => 'pop_view',
+		'page arguments' => array(1,2),
+		'access arguments' => array('access content')
+	);
+	return $items;
+}
+function pop_view($arg1, $arg2){
+	$view = views_embed_view('pop', $arg1, $arg2);
+	drupal_json_output($view);
+}

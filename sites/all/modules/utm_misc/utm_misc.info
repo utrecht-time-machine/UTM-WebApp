@@ -1,0 +1,4 @@
+name = UTM Misc
+description = Miscellaneous functions for UTM
+package = Custom
+core = 7.x

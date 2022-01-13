@@ -1,0 +1,8 @@
+name = UTM Map
+description = Leaflet extension for UTM
+package = Custom
+core = 7.x
+stylesheets[all][] = css/leaflet.min.css
+stylesheets[all][] = css/leaflet.cluster.min.css
+scripts[] = js/leaflet.min.js
+scripts[] = js/leaflet.cluster.min.js

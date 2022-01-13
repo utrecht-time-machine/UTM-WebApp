@@ -1,0 +1,18 @@
+
+
+
+/* override */
+
+
+
+.horizontal-tabs fieldset.horizontal-tabs-pane{padding-top: 20px;}
+.field-group-htabs{background: #fff;}
+.adminimal-theme a.tabledrag-handle .handle{margin: 0.2em 0.8em 0.2em 0.2em !important;}
+.draggable a.tabledrag-handle{margin-left: 0;}
+.focal-point-help,.focal-point-preview-link{display: none !important;}
+.form-item div.description{margin: 8px 0;}
+.form-autocomplete{background-position: calc(100% - 4px) 7px !important; padding-right: 24px !important;}
+.field-widget-text-textarea .text-format-wrapper fieldset.filter-wrapper.form-wrapper{display: none !important;}
+body.adminimal-menu:before{height: 28px !important;}
+body.adminimal-menu #admin-menu{height: 28px !important; border-bottom: none !important;}
+body.adminimal-menu #admin-menu .dropdown li ul{border-top: none !important;}
