@@ -1,1 +1,3 @@
 sites/default/settings.php
+.DS_Store
+sites/.DS_Store
