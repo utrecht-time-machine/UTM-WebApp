@@ -109,30 +109,39 @@ $overworld = utm_map(
 		</div>
 		<?= render($page['header']); ?>
 	</header>
+<?php if(!empty($page_tabs)): ?>
+	<div class="node-tabs">
+		<div class="band">
+			<div class="node-tabs-inner">
+				<div><?= $page_tabs; ?></div>
+<?php if(isset($node) && !empty($node->nid) && user_is_logged_in()): ?>
+				<div class="node-revision"><?= views_embed_view('misc', 'revision', $node->nid); ?></div>
+<?php endif; ?>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
 	<div class="page">
 		<main>
 			<?= $messages; ?>
 			<?= render($page['content']); ?>
 		</main>
 		<?= render($page['footer']); ?>
-<?php if(!empty($page_tabs)): ?>
-		<div class="node-tabs">
-			<div class="band">
-				<div class="node-tabs-inner">
-					<div><?= $page_tabs; ?></div>
-<?php if(isset($node) && !empty($node->nid) && user_is_logged_in()): ?>
-					<div class="node-revision"><?= views_embed_view('misc', 'revision', $node->nid); ?></div>
-<?php endif; ?>
-				</div>
-			</div>
-		</div>
-<?php endif; ?>
 		<?= render($page['bottom']); ?>
 	</div>
 	<div class="bottom-bar">
 		<div class="band">
-			<div class="bottom-brand">
-				<div>Utrecht<br/>Time Machine</div>
+			<div class="bottom-bar-inner">
+				<div>
+					<div class="bottom-brand">
+						<div>Utrecht<br/>Time Machine</div>
+					</div>
+				</div>
+<?php if(user_is_logged_in() !== true): ?>
+				<div>
+					<a href="<?= base_path(); ?>user" class="user-login-button">Inloggen</a>
+				</div>
+<?php endif; ?>
 			</div>
 			<div class="logo-bar">
 				<?= $logo_view; ?>

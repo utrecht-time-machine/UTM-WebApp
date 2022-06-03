@@ -39,12 +39,14 @@ function utm_map($map_id, $lang = 'nl', $nid = false, $series = false, $lat, $lo
 		if(!empty($e)){
 			$v = explode('##', $e);
 			if(count($v) == 5){
-				$map_data[] = array(
-					'nid' => $v[0],
-					'lat' => $v[1],
-					'lon' => $v[2],
-					'box' => '<a href="'.base_path().drupal_get_path_alias('node/'.$v[0]).'"><span class="name">'.$v[3].'</span><span class="name-sub">'.$v[4].'</span></a>',
-				);
+				if(!empty($v[1]) && !empty($v[2])){
+					$map_data[] = array(
+						'nid' => $v[0],
+						'lat' => $v[1],
+						'lon' => $v[2],
+						'box' => '<a href="'.base_path().drupal_get_path_alias('node/'.$v[0]).'"><span class="name">'.$v[3].'</span><span class="name-sub">'.$v[4].'</span></a>',
+					);
+				}
 			}
 		}
 	}

@@ -1,0 +1,6 @@
+RewriteEngine On 
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^([a-z]{2})/([0-9]{1,4})([\/]{0,})$ index.php?var1=$1&var2=$2 [L,QSA]
+RewriteRule ^([a-z]{2})([\/]{0,})$ index.php?var1=$1 [L,QSA]

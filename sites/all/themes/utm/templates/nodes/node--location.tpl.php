@@ -24,6 +24,10 @@ if(!empty($stories)){
 		$stories_list[] = $e['target_id'];
 	}
 }
+$tv = (isset($content['field_cast_video']) ? true : false);
+if($tv){
+	array_unshift($stories_list, $node->nid);
+}
 
 
 
@@ -54,7 +58,7 @@ $lang_str = array(
 	'more-btn' => array('nl' => 'Lees meer over deze plek', 'en' => 'Read more about this place'),
 	'map' => array('nl' => 'Kaart', 'en' => 'Map'),
 	'geo-user' => array('nl' => 'Mijn locatie', 'en' => 'My location'),
-	'partner' => array('nl' => 'Een bijdrage van', 'en' => 'Contributed by'),
+	'partner' => array('nl' => 'Bijgedragen door', 'en' => 'Contributed by'),
 );
 if($lang == 'en'){
 	$version_en = $node->nid;
@@ -108,6 +112,11 @@ if($latlon){
 <?php endif; ?>
 	<div class="node-head-container lazy-load"<?= ($photo ? ' data-uri="'.image_style_url('wide', $photo).'" data-uri-mob="'.image_style_url('square', $photo).'"' : ''); ?>>
 		<div class="node-head">
+<?php if($tv): ?>
+			<div class="tv-button">
+				<a class="tv-button" data-pop="tv" data-nid="<?= $node->nid; ?>"></a>
+			</div>
+<?php endif; ?>
 			<div class="outer"></div>
 			<div class="inner">
 				<div class="reg">
@@ -126,6 +135,12 @@ if($latlon){
 <?php if($street): ?>
 		<h3><?= $street; ?></h3>
 <?php endif; ?>
+<?php if($partner_view): ?>
+		<h4><?= $lang_str['partner'][$lang]; ?></h4>
+		<div class="partner-bar">
+			<?= $partner_view; ?>
+		</div>
+<?php endif; ?>
 <?php if($head || $teaser): ?>
 		<p><?= ($head ? '<strong>'.$head.'</strong>'.($teaser ? ' &mdash; ' : '') : '').($teaser ? $teaser : ''); ?></p>
 <?php endif; ?>
@@ -135,12 +150,6 @@ if($latlon){
 			<div class="fold-toggle fold-toggle-hidden">
 				<?= $blocks; ?>
 			</div>
-		</div>
-<?php endif; ?>
-<?php if($partner_view): ?>
-		<h4><?= $lang_str['partner'][$lang]; ?></h4>
-		<div class="partner-bar">
-			<?= $partner_view; ?>
 		</div>
 <?php endif; ?>
 <?php if(!empty($stories_list)): ?>

@@ -21,6 +21,14 @@
 <!--[if lt IE 9]><script src="<?= $base_path.$path_to_zen; ?>/js/html5shiv.min.js"></script><![endif]-->
 <?php endif; ?>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJP36NY3W2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KJP36NY3W2', {'anonymize_ip': true});
+</script>
+
 </head>
 
 <body class="<?= $classes; ?>" <?= $attributes;?>>

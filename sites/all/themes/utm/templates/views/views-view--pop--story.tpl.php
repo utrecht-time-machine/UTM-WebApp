@@ -7,5 +7,7 @@
 		</div>
 	</div>
 	<div class="swiper-pagination <?= $rand; ?>"></div>
+	<div class="swiper-btn prev <?= $rand; ?>"></div>
+	<div class="swiper-btn next <?= $rand; ?>"></div>
 </div>
 <?php endif; ?>

@@ -2,6 +2,56 @@
 
 
 
+//video embed uri
+
+
+
+function uri_to_embed($uri, $autoplay = false){
+	$parse = parse_url($uri);
+	switch($parse['host']){
+		case 'www.vimeo.com':
+		case 'vimeo.com':
+			$embed = 'https://player.vimeo.com/video/'.trim($parse['path'], '/');
+			if($autoplay){
+				$embed = $embed.(stristr($embed, '?') ? '&' : '?').'autoplay=1';
+			}
+		break;
+		case 'www.youtube.com':
+		case 'youtube.com':
+			parse_str($parse['query']);
+			if(isset($v)){
+				$embed = 'https://www.youtube-nocookie.com/embed/'.$v;
+			}
+			if(isset($t)){
+				$embed .= '?start='.$t;
+			}
+			if($autoplay){
+				$embed = $embed.(stristr($embed, '?') ? '&' : '?').'autoplay=1';
+			}
+			$embed = $embed.(stristr($embed, '?') ? '&' : '?').'enablejsapi=1&amp;version=3&amp;playerapiid=ytplayer';
+		break;
+		case 'youtu.be':
+			$v = substr(strrchr(trim($uri, '/'), '/'), 1);
+			if(stristr($v, '?t')){
+				$t = strrchr($v, '?');
+				$v = str_replace($t, '', $v);
+				$v = $v.'?start='.substr($t, 3);
+			}
+			$embed = 'https://www.youtube-nocookie.com/embed/'.$v;
+			if($autoplay){
+				$embed = $embed.(stristr($embed, '?') ? '&' : '?').'autoplay=1';
+			}
+			$embed = $embed.(stristr($embed, '?') ? '&' : '?').'enablejsapi=1&amp;version=3&amp;playerapiid=ytplayer';
+		break;
+		default:
+			$embed = $uri;
+		break;
+	}
+	return $embed;
+}
+
+
+
 //caption
 
 
@@ -47,5 +97,8 @@ function utm_misc_menu(){
 }
 function pop_view($arg1, $arg2){
 	$view = views_embed_view('pop', $arg1, $arg2);
+	if(user_is_logged_in() === true){
+		$view = '<div class="tabs-inline"><a href="'.base_path().'node/'.$arg2.'/edit">Bewerken</a></div>'.$view;
+	}
 	drupal_json_output($view);
 }

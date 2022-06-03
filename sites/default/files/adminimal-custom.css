@@ -13,6 +13,7 @@
 .form-item div.description{margin: 8px 0;}
 .form-autocomplete{background-position: calc(100% - 4px) 7px !important; padding-right: 24px !important;}
 .field-widget-text-textarea .text-format-wrapper fieldset.filter-wrapper.form-wrapper{display: none !important;}
+.field.field-name-field-photo-slide.field-label-hidden{margin-top: 8px;}
 body.adminimal-menu:before{height: 28px !important;}
 body.adminimal-menu #admin-menu{height: 28px !important; border-bottom: none !important;}
 body.adminimal-menu #admin-menu .dropdown li ul{border-top: none !important;}
