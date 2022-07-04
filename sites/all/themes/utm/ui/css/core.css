@@ -598,6 +598,8 @@ h3{font-size: 1.7em;}
 .fold .block-ck>div,.fold .block-photo>div,.fold .block-embed>div{max-width: none; margin-left: 0;}
 .block-location-new{margin: 4rem 0;}
 .block-location-hot{margin: 4rem 0;}
+.block-series{margin: 4rem 0;}
+.block-series .swiper-slide{display: inline-block; width: 24%; margin: 15px; -webkit-transform: translateZ(0); -webkit-backface-visibility: hidden;}
 
 
 
